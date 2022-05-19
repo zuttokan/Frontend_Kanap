@@ -25,21 +25,14 @@ function processCart() {
 }
 
 function render(processedCartItems) {
+  const tableRef = document.getElementById('cart__items');
+
   processedCartItems.forEach((item, index) => {
     const img = document.createElement('img');
     img.setAttribute('src', item.image);
 
-  if (!data) {
-    const cartEmpty = document.querySelector('h1');
-    const cartSection = document.querySelector('.cart');
-
-    cartEmpty.innerHTML = "Vous n'avez pas encore fait votre choix ";
-    cartSection.style.display = 'none';
-
-
-
     // Gestion du panier vide
-  } else {
+
     // Création de la fiche produit dans le panier
     // //  "article" dans la section
     let productArticle = document.createElement('article');
@@ -55,7 +48,7 @@ function render(processedCartItems) {
     let productImg = document.createElement('img');
     productDivImg.appendChild(productImg);
     productImg.src = product.imageUrl;
-    productImg.alt = product.altImgProduct;
+    productImg.alt = product.altImg;
 
     // Insertion de l'élément "div"
     let productItemContent = document.createElement('div');
@@ -66,6 +59,13 @@ function render(processedCartItems) {
     let productTitle = document.createElement('h2');
     productItemContentTitlePrice.appendChild(productTitle);
     productTitle.innerHTML = nameProduct;
-  }
+  });
   render();
-  }
+}
+
+// if (!data) {
+//   const cartEmpty = document.querySelector('h1');
+//   const cartSection = document.querySelector('.cart');
+
+//   cartEmpty.innerHTML = "Vous n'avez pas encore fait votre choix ";
+//   cartSection.style.display = 'none';} else {}
