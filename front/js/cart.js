@@ -1,71 +1,50 @@
-const data = JSON.parse(localStorage.getItem('cmdProduct'));
-console.log(data);
-
-function getProductFromCatalog(productId) {
-  return products.find((f) => f.id === productId);
+// TODO: implement fetch from API and JSON conversion
+//return; // Return Array
+async function getProductsFromCatalog() {
+  const product = await fetch('http://localhost:3000/api/products/');
+  return product.json();
 }
 
-function processCart() {
-  const stockProducts = getProducts();
-  const cart = data;
-  const processedCart = cart.map((cartItem) => {
-    const product = getProductFromCatalog(cartItem.id);
+// TODO: implement localstorage getter and JSON conversion
+//return; // return Array
+function getCartContent() {
+  const data = JSON.parse(localStorage.getItem('cmdProduct'));
+  return data;
+}
 
+function findItemFromCatalog(catalog, id) {
+  return catalog.find((item) => item._id === id);
+}
+
+/* data : array of consolidated objects */
+// TODO: implement DOM rendering
+function render(consolidatedData) {
+  //for (let i = 0; i < data.length; i++) {}
+}
+
+async function processCart() {
+  const catalogProducts = await getProductsFromCatalog();
+  const cartContent = getCartContent();
+
+  const consolidatedCart = cartContent.map((cartItem) => {
+    const product = findItemFromCatalog(catalogProducts, cartItem.id);
+    console.log(product);
     return {
-      id: cartItem.id,
-      count: cartItem.count,
+      id: product._id,
+      qty: cartItem.quantity,
+      color: cartItem.color,
+
       name: product.name,
       description: product.description,
       unitPrice: product.unitPrice,
       totalAmount: product.unitPrice * cartItem.count,
       image: product.image,
-    };
+    }; // Implement consolidated object
   });
-  processCart();
+  console.log(consolidatedCart);
+
+  render(consolidatedCart);
 }
 
-function render(processedCartItems) {
-  const tableRef = document.getElementById('cart__items');
-
-  processedCartItems.forEach((item, index) => {
-    const img = document.createElement('img');
-    img.setAttribute('src', item.image);
-
-    // Gestion du panier vide
-
-    // Création de la fiche produit dans le panier
-    // //  "article" dans la section
-    let productArticle = document.createElement('article');
-    document.querySelector('#cart__items').appendChild(productArticle);
-    productArticle.name = 'cart__item';
-
-    // Insertion de l'élément "div" pour l'image
-    let productDivImg = document.createElement('div');
-    productArticle.appendChild(productDivImg);
-    productDivImg.name = 'cart__item__img';
-
-    // Insertion de l'image
-    let productImg = document.createElement('img');
-    productDivImg.appendChild(productImg);
-    productImg.src = product.imageUrl;
-    productImg.alt = product.altImg;
-
-    // Insertion de l'élément "div"
-    let productItemContent = document.createElement('div');
-    productArticle.appendChild(productItemContent);
-    productItemContent.className = 'cart__item__content';
-
-    // Insertion du titre h2
-    let productTitle = document.createElement('h2');
-    productItemContentTitlePrice.appendChild(productTitle);
-    productTitle.innerHTML = nameProduct;
-  });
-  render();
-}
-
-// if (!data) {
-//   const cartEmpty = document.querySelector('h1');
-//   const cartSection = document.querySelector('.cart');
-
-//   cartEmpty.innerHTML = "Vous n'avez pas encore fait votre choix ";
-//   cartSection.style.display = 'none';} else {}
+// Code entrypoint
+processCart();
