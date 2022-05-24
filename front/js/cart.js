@@ -19,11 +19,12 @@ function findItemFromCatalog(catalog, id) {
 /* data : array of consolidated objects */
 // TODO: implement DOM rendering
 function render(consolidatedData) {
+  document.querySelector('#cart__items').innerHTML = '';
   for (let i = 0; i < consolidatedData.length; i++) {
     let productArticle = document.createElement('article');
     document.querySelector('#cart__items').appendChild(productArticle);
     productArticle.className = 'cart__item';
-    productArticle.setAttribute('data-id', consolidatedData[i].id);
+    productArticle.id = consolidatedData[i].key;
 
     // Insertion de l'élément "div" pour l'image produit
     let productDivImg = document.createElement('div');
@@ -33,7 +34,7 @@ function render(consolidatedData) {
     // Insertion de l'image
     let productImg = document.createElement('img');
     productDivImg.appendChild(productImg);
-    productImg.src = consolidatedData[i].img;
+    productImg.src = consolidatedData[i].image;
 
     let productItemContent = document.createElement('div');
     productArticle.appendChild(productItemContent);
@@ -57,7 +58,7 @@ function render(consolidatedData) {
     // Insertion du prix
     let productPrice = document.createElement('p');
     productItemContentTitlePrice.appendChild(productPrice);
-    productPrice.innerHTML = consolidatedData[i].price;
+    productPrice.innerHTML = consolidatedData[i].price + '€';
 
     // Insertion de l'élément "div"
     let productItemContentSettings = document.createElement('div');
@@ -83,6 +84,34 @@ function render(consolidatedData) {
     productQuantity.setAttribute('type', 'number');
     productQuantity.setAttribute('min', '1');
     productQuantity.setAttribute('max', '100');
+    productQuantity.setAttribute('name', 'itemQuantity');
+
+    // Insertion de l'élément "div"
+    let productItemContentSettingsDelete = document.createElement('div');
+    productItemContentSettings.appendChild(productItemContentSettingsDelete);
+    productItemContentSettingsDelete.className =
+      'cart__item__content__settings__delete';
+
+    // Insertion de "p" supprimer
+    let productDelete = document.createElement('p');
+    productItemContentSettingsDelete.appendChild(productDelete);
+    productDelete.className = 'deleteItem';
+    productDelete.innerHTML = 'Supprimer';
+    productDelete.addEventListener('click', (e) => {
+      e.preventDefault;
+
+      // filtrer l'élément cliqué par le bouton supprimer
+      let deleteKey = consolidatedData[i].key;
+      localStorage.setItem(
+        'cmdProduct',
+        JSON.stringify(getCartContent().filter((el) => el.key !== deleteKey))
+      );
+      processCart();
+    });
+    document.getElementById('totalQuantity').innerHTML =
+      getTotalQty(consolidatedData);
+    document.getElementById('totalPrice').innerHTML =
+      getTotalPrice(consolidatedData);
   }
 }
 
@@ -92,18 +121,19 @@ async function processCart() {
 
   const consolidatedCart = cartContent.map((cartItem) => {
     const product = findItemFromCatalog(catalogProducts, cartItem.id);
-    console.log(product);
+    //console.log(product);
 
     return {
       id: cartItem.id,
       qty: cartItem.quantity,
       color: cartItem.color,
 
-      image: product.image,
+      key: cartItem.key,
+      image: product.imageUrl,
       name: product.name,
       description: product.description,
-      Price: product.Price,
-      totalAmount: product.unitPrice * cartItem.count,
+      price: product.price,
+      totalAmount: product.price * cartItem.quantity,
     }; // Implement consolidated object
   });
   console.log(consolidatedCart);
@@ -114,42 +144,10 @@ async function processCart() {
 // Code entrypoint
 processCart();
 
-// let basket = document.querySelector('#cart__items');
-// basket.innerHTML = consolidatedData.map(
-//   (product) =>
-//     `<article class="cart__item" data-id="${product._id}" data-couleur="${product[i].couleur}" data-quantité="${product.quantité}">
-// <div class="cart__item__img">
-//   <img src="${product.image}" alt="${product.alt}">
-// </div>
-// <div class="cart__item__content">
-//   <div class="cart__item__content__titlePrice">
-//     <h2>${product.name}</h2>
-//     <span>couleur : ${product.couleur}</span>
-//     <p data-prix="${product.prix}">${product.prix} €</p>
-//   </div>
-//   <div class="cart__item__content__settings">
-//     <div class="cart__item__content__settings__quantity">
-//       <p>Qté : </p>
-//       <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${product.quantité}">
-//     </div>
-//     <div class="cart__item__content__settings__delete">
-//       <p class="deleteItem" data-id="${product._id}" data-couleur="${product.couleur}">Supprimer</p>
-//     </div>
-//   </div>
-// </div>
-// </article>`
-// );
+function getTotalPrice(consolidatedData) {
+  return consolidatedData.reduce((total, c) => total + c.totalAmount, 0);
+}
 
-//*************************************** */
-// var template =
-// '<div>' +
-// consolidatedData[i]._id +
-// '</div>' +
-// '<div>' +
-// consolidatedData[i].name +
-// '</div>' +
-// '<div>' +
-// consolidatedData[i].price +
-// '</div>';
-
-// document.body.insertAdjacentHTML('afterbegin', template);
+function getTotalQty(consolidatedData) {
+  return consolidatedData.reduce((total, c) => total + c.qty, 0);
+}

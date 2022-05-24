@@ -56,7 +56,7 @@ const quantityProduct = document.querySelector('#quantity');
 // on récupére le localStorage
 function updateLocalStorage(product) {
   const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
-  const foundIndex = data.findIndex((d) => d.id === product.id);
+  const foundIndex = data.findIndex((d) => d.key === product.key);
 
   if (foundIndex === -1) {
     data.push(product);
@@ -77,6 +77,7 @@ addToCardBtn.addEventListener('click', () => {
     id: idProduct,
     color: colorValue,
     quantity: quantityValue,
+    key: idProduct + ':' + colorValue,
   };
 
   if (checkErrors(colorValue, quantityValue) == true) {
