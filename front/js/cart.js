@@ -246,9 +246,9 @@ function getForm() {
   };
 }
 getForm();
-//GETFORM EST FONCTIONNEL  MAIS //
-// POSTFORM POSE UN PROBLEME ET EMPECHE GETFORM DE FONCTIONNER //
+// GET FORM FONCTIONNEL
 
+//POS FORM EN COURS DE CONSTRUCTION
 function postForm() {
   const order = document.getElementById('order');
   order.addEventListener('click', (event) => {
@@ -263,22 +263,12 @@ function postForm() {
       email: document.getElementById('email').value,
     };
 
-    //Construction d'un array d'id depuis le local storage
-    let products = [];
-    for (let i = 0; i < getCartContent.length; i++) {
-      products.push(getCartContent[i].id);
-    }
-
-    // je mets les valeurs du formulaire et les produits sélectionnés
-    // dans un objet...
+    //  les valeurs du formulaire  dans un objet
     const sendFormData = {
       contact,
-      products,
     };
 
-    // j'envoie le formulaire + localStorage (sendFormData)
-    // ... que j'envoie au serveur
-
+    //envoie du formulaire au serveur
     const options = {
       method: 'POST',
       body: JSON.stringify(sendFormData),
@@ -286,13 +276,6 @@ function postForm() {
         'Content-Type': 'application/json',
       },
     };
-
-    fetch('http://localhost:3000/api/products/order', options)
-      .then((response) => response.json())
-      .then((data) => {
-        localStorage.setItem('orderId', data.orderId);
-        document.location.href = 'confirmation.html?id=' + data.orderId;
-      });
-  }); // fin eventListener postForm
-} // fin envoi du formulaire postForm
+  });
+}
 postForm();
