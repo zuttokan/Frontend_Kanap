@@ -152,6 +152,30 @@ function getTotalQty(consolidatedData) {
   return consolidatedData.reduce((total, c) => total + c.qty, 0);
 }
 
+function modifyQtt() {
+  let qttModif = document.querySelectorAll('.itemQuantity');
+
+  for (let k = 0; k < qttModif.length; k++) {
+    qttModif[k].addEventListener('change', (event) => {
+      event.preventDefault();
+
+      //Selection de l'element à modifier en fonction de son id ET sa couleur
+      let quantityModif = productLocalStorage[k].qty;
+      let qttModifValue = qttModif[k].valueAsNumber;
+
+      const resultFind = productLocalStorage.find(
+        (el) => el.qttModifValue !== quantityModif
+      );
+
+      resultFind.qty = qttModifValue;
+      productLocalStorage[k].qty = resultFind.qty;
+
+      localStorage.setItem('cmdProduct', JSON.stringify());
+    });
+  }
+}
+modifyQtt();
+
 //mise en place du formulaire avec regex
 function getForm() {
   let form = document.querySelector('.cart__order__form');
