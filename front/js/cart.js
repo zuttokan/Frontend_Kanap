@@ -112,6 +112,18 @@ function render(consolidatedData) {
       getTotalQty(consolidatedData);
     document.getElementById('totalPrice').innerHTML =
       getTotalPrice(consolidatedData);
+
+    // Modification de la quantité des articles
+    let productModify = document.querySelectorAll('.itemQuantity');
+    productModify.addEventListener('change', (e) => {
+      e.preventDefault;
+      let modifyKey = consolidatedData[m].key;
+      localStorage.setItem(
+        'cmdProduct',
+        JSON.stringify(getCartContent().filter((el) => el.key !== modifyKey))
+      );
+      processCart();
+    });
   }
 }
 
@@ -151,30 +163,6 @@ function getTotalPrice(consolidatedData) {
 function getTotalQty(consolidatedData) {
   return consolidatedData.reduce((total, c) => total + c.qty, 0);
 }
-
-function modifyQtt() {
-  let qttModif = document.querySelectorAll('.itemQuantity');
-
-  for (let k = 0; k < qttModif.length; k++) {
-    qttModif[k].addEventListener('change', (event) => {
-      event.preventDefault();
-
-      //Selection de l'element à modifier en fonction de son id ET sa couleur
-      let quantityModif = productLocalStorage[k].qty;
-      let qttModifValue = qttModif[k].valueAsNumber;
-
-      const resultFind = productLocalStorage.find(
-        (el) => el.qttModifValue !== quantityModif
-      );
-
-      resultFind.qty = qttModifValue;
-      productLocalStorage[k].qty = resultFind.qty;
-
-      localStorage.setItem('cmdProduct', JSON.stringify());
-    });
-  }
-}
-modifyQtt();
 
 //mise en place du formulaire avec regex
 function getForm() {
@@ -272,7 +260,7 @@ function getForm() {
 getForm();
 // GET FORM FONCTIONNEL
 
-//POS FORM EN COURS DE CONSTRUCTION
+//POST FORM EN COURS DE CONSTRUCTION
 function postForm() {
   const order = document.getElementById('order');
   order.addEventListener('click', (event) => {
