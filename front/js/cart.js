@@ -11,7 +11,7 @@ function getCartContent() {
   const data = JSON.parse(localStorage.getItem('cmdProduct'));
   return data;
 }
-
+//filtrer un tableau pour trouver une correspondance avec l'id du produit
 function findItemFromCatalog(catalog, id) {
   return catalog.find((item) => item._id === id);
 }
@@ -113,17 +113,22 @@ function render(consolidatedData) {
     document.getElementById('totalPrice').innerHTML =
       getTotalPrice(consolidatedData);
 
-    // Modification de la quantité des articles
+    //Modification de la quantité des articles
     let productModify = document.querySelectorAll('.itemQuantity');
-    productModify.addEventListener('change', (e) => {
-      e.preventDefault;
-      let modifyKey = consolidatedData[m].key;
-      localStorage.setItem(
-        'cmdProduct',
-        JSON.stringify(getCartContent().filter((el) => el.key !== modifyKey))
-      );
-      processCart();
-    });
+    for (let i = 0; i < productModify.length; i++) {
+      productModify[i].addEventListener('change', (e) => {
+        e.preventDefault;
+        let modifyKey = consolidatedData[i].key;
+        const foo = getCartContent();
+        console.log(foo[i]);
+        foo[i].quantity = e.target.value;
+        console.log(foo[i]);
+        //console.log(e.target.value);
+
+        localStorage.setItem('cmdProduct', JSON.stringify(foo));
+        processCart();
+      });
+    }
   }
 }
 
@@ -161,7 +166,7 @@ function getTotalPrice(consolidatedData) {
 }
 
 function getTotalQty(consolidatedData) {
-  return consolidatedData.reduce((total, c) => total + c.qty, 0);
+  return consolidatedData.reduce((total, c) => total + parseInt(c.qty, 10), 0);
 }
 
 //mise en place du formulaire avec regex
