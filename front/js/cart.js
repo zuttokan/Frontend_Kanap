@@ -120,9 +120,9 @@ function render(consolidatedData) {
         e.preventDefault;
         let modifyKey = consolidatedData[i].key;
         const foo = getCartContent();
-        console.log(foo[i]);
+        // console.log(foo[i]);
         foo[i].quantity = e.target.value;
-        console.log(foo[i]);
+        //console.log(foo[i]);
         //console.log(e.target.value);
 
         localStorage.setItem('cmdProduct', JSON.stringify(foo));
