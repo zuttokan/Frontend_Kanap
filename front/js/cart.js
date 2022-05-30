@@ -119,13 +119,13 @@ function render(consolidatedData) {
       productModify[i].addEventListener('change', (e) => {
         e.preventDefault;
         let modifyKey = consolidatedData[i].key;
-        const foo = getCartContent();
-        // console.log(foo[i]);
-        foo[i].quantity = e.target.value;
-        //console.log(foo[i]);
+        const productModifyAfter = getCartContent();
+        // console.log(productModifyAfter[i]);
+        productModifyAfter[i].quantity = e.target.value;
+        //console.log(productModifyAfter[i]);
         //console.log(e.target.value);
 
-        localStorage.setItem('cmdProduct', JSON.stringify(foo));
+        localStorage.setItem('cmdProduct', JSON.stringify(productModifyAfter));
         processCart();
       });
     }
