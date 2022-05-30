@@ -263,7 +263,6 @@ function getForm() {
   };
 }
 getForm();
-// GET FORM FONCTIONNEL
 
 //POST FORM EN COURS DE CONSTRUCTION
 function postForm() {
@@ -271,6 +270,12 @@ function postForm() {
   order.addEventListener('click', (event) => {
     event.preventDefault();
 
+    // récupération des articles
+    const productCmd = [];
+    for (let i = 0; i < getCartContent.length; i++) {
+      productCmd.push(getCartContent[i].id);
+    }
+    console.log(productCmd);
     //récupèration des données du formulaire dans un objet
     const contact = {
       firstName: document.getElementById('firstName').value,
@@ -279,10 +284,11 @@ function postForm() {
       city: document.getElementById('city').value,
       email: document.getElementById('email').value,
     };
-
+    console.log(contact);
     //  les valeurs du formulaire  dans un objet
     const sendFormData = {
       contact,
+      productCmd,
     };
 
     //envoie du formulaire au serveur
