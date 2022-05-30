@@ -265,19 +265,21 @@ function getForm() {
 getForm();
 
 //POST FORM EN COURS DE CONSTRUCTION
-function postForm() {
-  const order = document.getElementById('order');
-  order.addEventListener('click', (event) => {
-    event.preventDefault();
+function postForm(consolidatedData) {
+  let order = document.getElementById('order');
+  order.addEventListener('click', (e) => {
+    e.preventDefault();
 
     // récupération des articles
-    const productCmd = [];
-    for (let i = 0; i < getCartContent.length; i++) {
-      productCmd.push(getCartContent[i].id);
-    }
+    let productCmd = consolidatedData[c].key;
+    localStorage.getItem(
+      'cmdProduct',
+      JSON.stringify(getCartContent().filter((el) => el.key !== productCmd))
+    );
     console.log(productCmd);
+
     //récupèration des données du formulaire dans un objet
-    const contact = {
+    let contact = {
       firstName: document.getElementById('firstName').value,
       lastName: document.getElementById('lastName').value,
       address: document.getElementById('address').value,
@@ -285,20 +287,27 @@ function postForm() {
       email: document.getElementById('email').value,
     };
     console.log(contact);
-    //  les valeurs du formulaire  dans un objet
-    const sendFormData = {
+
+    //  les elements du formulaire  dans un objet
+    let sendFormData = {
       contact,
       productCmd,
     };
 
     //envoie du formulaire au serveur
-    const options = {
+    let options = {
       method: 'POST',
       body: JSON.stringify(sendFormData),
       headers: {
         'Content-Type': 'application/json',
       },
     };
+    fetch('http://localhost:3000/api/products/order', options)
+      .then((response) => response.json())
+      .then((data) => {
+        localStorage.setItem('orderId', data.orderId);
+        document.location.href = 'confirmation.html?id=' + data.orderId;
+      });
   });
 }
 postForm();
