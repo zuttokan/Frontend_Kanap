@@ -3,12 +3,11 @@ injectProducts();
 
 // Recuperation des produits de l'api
 async function getProducts() {
-  // fonction asynchrone afin continuer à réagir aux autres évènements pendant l'exécution de cette tâche.
+  // fonction getProducts asynchrone afin continuer à réagir aux autres évènements pendant l'exécution de cette tâche.
   const products = await fetch('http://localhost:3000/api/products');
-  // await permet d'attendre la résolution d'une promesse.
+  //  on récupére les produits avec products et await permet d'attendre la résolution de la promesse.
   return products.json();
-  // retourne la réponse en Json et sera appelé products.
-  // Json permet de transmettre les données au localStorage
+  // on retourne la réponse en format json, ce qui permet de transmettre les données au localStorage en chaine de charatere et de terminer la promesse.
 }
 
 // Affichage des produits de l'api sur la page
@@ -16,7 +15,7 @@ async function injectProducts() {
   const products = await getProducts();
   // products récupére la fonction de getProducts
   products.forEach((product) => {
-    // une boucle dans products  permettant d'éxécuter une fonction pour chaque éléments qui seront appelé product
+    // on crée une boucle dans products permettant d'éxécuter une fonction pour chaque éléments qui seront appelé product
 
     //  Implémentation d'un lien précisant l'id produit vers la page products
     let productLink = document.createElement('a');
