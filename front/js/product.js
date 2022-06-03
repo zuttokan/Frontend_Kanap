@@ -8,7 +8,7 @@ function getProductId() {
   //on retourne la variable params qui récupère l'url de la page avec l'id produit
 }
 
-// // Récupération des produits de l'api (voir script.js)
+// Récupération des produits de l'api (voir script.js)
 async function getProduct(productId) {
   const product = await fetch(
     'http://localhost:3000/api/products/' + productId
@@ -70,7 +70,7 @@ function updateLocalStorage(product) {
   const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
   // data récupére le localSotrage et Json.parse transforme la chaine de charatere en objet pour Javascript
   const foundIndex = data.findIndex((d) => d.key === product.key);
-  // // la méthode findIndex() va parcourir "data" qui est un tableau
+  //  la méthode findIndex() va parcourir "data" qui est un tableau
   // "d.key === product.key" c'est une condition cela veut dire data  === localStorage
   // product === nouveau produit
   // si dans le localStorage on a un produit avec le même name que le nouveau produit

@@ -1,30 +1,31 @@
-// TODO: implement fetch from API and JSON conversion
-//return; // Return Array
+// Récupération des produits de l'api (voir script.js)
 async function getProductsFromCatalog() {
   const product = await fetch('http://localhost:3000/api/products/');
   return product.json();
 }
 
-// TODO: implement localstorage getter and JSON conversion
-//return; // return Array
+// implémentation du localstorage
 function getCartContent() {
   const data = JSON.parse(localStorage.getItem('cmdProduct'));
+  // avec "data" on récupére le localStorage qui a pour argument cmdProduct
   return data;
 }
 //filtrer un tableau pour trouver une correspondance avec l'id du produit
 function findItemFromCatalog(catalog, id) {
   return catalog.find((item) => item._id === id);
+  //.find renvoie la valeur du premier élément trouvé dans le tableau
 }
 
-/* data : array of consolidated objects */
-// TODO: implement DOM rendering
+// implémentation dans le DOM
 function render(consolidatedData) {
   document.querySelector('#cart__items').innerHTML = '';
   for (let i = 0; i < consolidatedData.length; i++) {
+    // la boucle permet à consolidatedData de faire le tour des articles un insérrant les produits dans le DOM
     let productArticle = document.createElement('article');
     document.querySelector('#cart__items').appendChild(productArticle);
     productArticle.className = 'cart__item';
     productArticle.id = consolidatedData[i].key;
+    // association de l'id et la clé produit (key) afin qu'il soit unique
 
     // Insertion de l'élément "div" pour l'image produit
     let productDivImg = document.createElement('div');
@@ -108,6 +109,7 @@ function render(consolidatedData) {
       );
       processCart();
     });
+
     document.getElementById('totalQuantity').innerHTML =
       getTotalQty(consolidatedData);
     document.getElementById('totalPrice').innerHTML =
@@ -119,11 +121,7 @@ function render(consolidatedData) {
       productModify[i].addEventListener('change', (e) => {
         e.preventDefault;
         const productModifyAfter = getCartContent();
-        // console.log(productModifyAfter[i]);
         productModifyAfter[i].quantity = e.target.value;
-        //console.log(productModifyAfter[i]);
-        //console.log(e.target.value);
-
         localStorage.setItem('cmdProduct', JSON.stringify(productModifyAfter));
         processCart();
       });
@@ -173,7 +171,7 @@ function getTotalQty(consolidatedData) {
 function validateForm() {
   let form = document.querySelector('.cart__order__form');
 
-  // Ajout des Regex
+  // Création de RegExp pour le formulaire
   let formRegExp = new RegExp("^[a-zA-Z ,.'-]+$");
   let addressRegExp = new RegExp(
     '^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+'
@@ -182,7 +180,7 @@ function validateForm() {
     '^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$'
   );
 
-  // validateField
+  // validation du formulaire ou validateField
   const validation = [
     validTextField(form.firstName, formRegExp),
     validTextField(form.lastName, formRegExp),
@@ -194,7 +192,7 @@ function validateForm() {
   return validation.filter((r) => r == false).length == 0;
 }
 
-//validation généreique du formulaire
+// fonction de validation du formulaire
 function validTextField(input, regExp) {
   let errorMsg = input.nextElementSibling;
 
@@ -206,7 +204,7 @@ function validTextField(input, regExp) {
     return false;
   }
 }
-//POST FORM EN COURS DE CONSTRUCTION
+//POST FORM
 function postForm() {
   const order = document.getElementById('order');
 
