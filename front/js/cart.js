@@ -214,10 +214,12 @@ function validTextField(input, regExp) {
 
   if (regExp.test(input.value)) {
     errorMsg.innerHTML = '';
+    // si le texte est valide on n'inscrit rien
     return true;
   } else {
     errorMsg.innerHTML = 'Veuillez renseigner ce champ.';
     return false;
+    // si le texte n'est pas valide on un message d'erreur s'affiche sur la page
   }
 }
 
@@ -264,6 +266,9 @@ function postForm() {
     headers: {
       'Content-Type': 'application/json',
     },
+    // on convertit une valeur JavaScript en chaîne JSON
+
+    // implémentation du retour de la commande dans le DOM
   };
   fetch('http://localhost:3000/api/products/order', options)
     .then((response) => response.json())
@@ -272,7 +277,8 @@ function postForm() {
       document.location.href = 'confirmation.html?id=' + data.orderId;
     });
 }
-// vérifie si le form est valide, si valide le traitement s'arrete
+
+// vérifie si le form est valide, si il est valide le traitement s'arrete
 order.addEventListener('click', (e) => {
   e.preventDefault();
 
