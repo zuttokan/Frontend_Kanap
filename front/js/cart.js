@@ -84,6 +84,7 @@ function render(consolidatedData) {
     productQuantity.className = 'itemQuantity';
     productQuantity.setAttribute('type', 'number');
     productQuantity.setAttribute('min', '1');
+    //setAttribute ajoute un nouvel attribut ou change la valeur d'un attribut, il le met à jour
     productQuantity.setAttribute('max', '100');
     productQuantity.setAttribute('name', 'itemQuantity');
 
@@ -100,20 +101,26 @@ function render(consolidatedData) {
     productDelete.innerHTML = 'Supprimer';
     productDelete.addEventListener('click', (e) => {
       e.preventDefault;
+      // addEventListener à chaque click on appel un evement
 
       // filtrer l'élément cliqué par le bouton supprimer
       let deleteKey = consolidatedData[i].key;
+      // deleteKey récupére la clé du produit et permet sa suppréssion
       localStorage.setItem(
         'cmdProduct',
         JSON.stringify(getCartContent().filter((el) => el.key !== deleteKey))
       );
+      // on mets à jour le localStorage en retournant un nouveau tableau
       processCart();
+      //on appel processCart qui réactualise la page
     });
 
     document.getElementById('totalQuantity').innerHTML =
       getTotalQty(consolidatedData);
+    // on inserre la quantité total
     document.getElementById('totalPrice').innerHTML =
       getTotalPrice(consolidatedData);
+    // on inserre le prix
 
     //Modification de la quantité des articles
     let productModify = document.querySelectorAll('.itemQuantity');
@@ -121,9 +128,12 @@ function render(consolidatedData) {
       productModify[i].addEventListener('change', (e) => {
         e.preventDefault;
         const productModifyAfter = getCartContent();
+        // productModifyAfter reprend les éléments du localStorage
         productModifyAfter[i].quantity = e.target.value;
+        // on envoi la quantité modifié
         localStorage.setItem('cmdProduct', JSON.stringify(productModifyAfter));
         processCart();
+        // on mets à jour le localStorage en retournant un nouveau tableau
       });
     }
   }
@@ -131,11 +141,13 @@ function render(consolidatedData) {
 
 async function processCart() {
   const catalogProducts = await getProductsFromCatalog();
+  // catalogProducts récupére les produits dans le back-end
   const cartContent = getCartContent();
-
+  // cartContent récupére les produits dans le localStorage
   const consolidatedCart = cartContent.map((cartItem) => {
+    // consolidatedCart va faire une boucle et transmettre un nouveau tableau avec le résultat qui sera cartItem
     const product = findItemFromCatalog(catalogProducts, cartItem.id);
-    //console.log(product);
+    // product récupére un produit précisement...
 
     return {
       id: cartItem.id,
@@ -148,23 +160,25 @@ async function processCart() {
       description: product.description,
       price: product.price,
       totalAmount: product.price * cartItem.quantity,
-    }; // Implement consolidated object
+    }; // on retourne les charactérisiques d'un produit
   });
   console.log(consolidatedCart);
 
   render(consolidatedCart);
+  // on appel render afin de modifier le DOM
 }
 
-// Code entrypoint
 processCart();
 
 function getTotalPrice(consolidatedData) {
   return consolidatedData.reduce((total, c) => total + c.totalAmount, 0);
+  //on applique une fonction (reduce) qui est un « accumulateur » et qui traite chaque valeur d'une liste afin de la réduire à une seule valeur.
 }
 
 function getTotalQty(consolidatedData) {
   // second donne la parametre la base numérique
   return consolidatedData.reduce((total, c) => total + parseInt(c.qty, 10), 0);
+  //on applique la meme fonction (reduce) en ajoutant une autre fonction (parseInt) qui analyse une chaîne de caractère renvoie nombre un entier
 }
 
 //mise en place du formulaire avec regex
@@ -179,6 +193,7 @@ function validateForm() {
   let emailRegExp = new RegExp(
     '^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$'
   );
+  // RegExp permet de vérifier le contenu d'une chaîne de caractères.
 
   // validation du formulaire ou validateField
   const validation = [
@@ -187,6 +202,7 @@ function validateForm() {
     validTextField(form.city, formRegExp),
     validTextField(form.address, addressRegExp),
     validTextField(form.email, emailRegExp),
+    // on associe les regexp avec le formulaire pour vérification
   ];
 
   return validation.filter((r) => r == false).length == 0;
@@ -204,7 +220,8 @@ function validTextField(input, regExp) {
     return false;
   }
 }
-//POST FORM
+
+//
 function postForm() {
   const order = document.getElementById('order');
 
@@ -233,7 +250,9 @@ function postForm() {
     contact,
     products: productCmd.map((product) => product.id),
   };
+
   console.log(sendFormData);
+
   //envoie du formulaire au serveur
   const options = {
     method: 'POST',
