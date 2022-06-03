@@ -227,13 +227,16 @@ function postForm() {
 
   // récupération des articles
   const productCmd = localStorage.hasOwnProperty('cmdProduct')
-    ? JSON.parse(localStorage.getItem('cmdProduct'))
+    ? // hasOwnProperty retourne un booléen indiquant si l'objet possède la propriété spécifiée
+      JSON.parse(localStorage.getItem('cmdProduct'))
     : [];
+  // on utilise une condition ternaire pour vérifier si le localstorage contient des éléments, si oui on les récupére
   console.log(productCmd);
 
   if (productCmd.length == 0) {
     console.error('Empty cart');
     return;
+    // si il n'y a rien cela retourne une erreur
   }
 
   //récupèration des données du formulaire dans un objet
@@ -245,11 +248,12 @@ function postForm() {
     email: document.getElementById('email').value,
   };
 
-  //  les elements du formulaire  dans un objet
+  //  récupération de tous les éléments du formulaire et des produits achetés
   const sendFormData = {
     contact,
     products: productCmd.map((product) => product.id),
   };
+  //  sendFormData parcourt les éléments
 
   console.log(sendFormData);
 
