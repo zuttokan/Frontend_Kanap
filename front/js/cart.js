@@ -122,6 +122,7 @@ function renderItemContentSettingsDelete(productQuantity) {
   productItemContentSettings.appendChild(productItemContentSettingsDelete);
   productItemContentSettingsDelete.className =
     'cart__item__content__settings__delete';
+  return productItemContentSettingsDelete;
 }
 
 // implement the delete product
@@ -139,7 +140,6 @@ function renderDelete(productItemContentSettingsDelete, key) {
       'cmdProduct',
       JSON.stringify(getCartContent().filter((el) => el.key !== deleteKey))
     );
-
     processCart();
   });
 }
@@ -203,7 +203,10 @@ function render(consolidatedData) {
     const productItemContentSettingsQuantity =
       renderItemContentSettingsQuantity(productItemContentSettings);
     const productQty = renderQty(productItemContentSettingsQuantity);
-    const productQuantity = renderproductQuantity(consolidatedData[i].qty);
+    const productQuantity = renderproductQuantity(
+      productQty,
+      consolidatedData[i].qty
+    );
     const productItemContentSettingsDelete =
       renderItemContentSettingsDelete(productQuantity);
     const productDelete = renderDelete(productItemContentSettingsDelete);

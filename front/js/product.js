@@ -77,9 +77,9 @@ function updateLocalStorage(product) {
 
 // listening the click for the addToCardBtn
 addToCardBtn.addEventListener('click', () => {
-  const arrayProduct = []; 
-  const colorValue = colorProduct.value; 
-  const quantityValue = quantityProduct.value; 
+  const arrayProduct = [];
+  const colorValue = colorProduct.value;
+  const quantityValue = quantityProduct.value;
 
   // an object is created or the order information is stored
   const objectProduct = {
@@ -94,15 +94,13 @@ addToCardBtn.addEventListener('click', () => {
     return;
   }
 
-// if yes we will update the localStorage with the function updateLocalStorage() which will take the object and not the array
+  // if yes we will update the localStorage with the function updateLocalStorage() which will take the object and not the array
   if (localStorage.hasOwnProperty(STORAGE_KEY)) {
     updateLocalStorage(objectProduct);
-    
   } else {
     // if there is no localStorage with the name === "cmdProduct" on set a localStorage with the table stringifying it
     arrayProduct.push(objectProduct);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(arrayProduct));
-    
   }
 });
 
@@ -131,4 +129,4 @@ function checkErrors(colorValue, quantityValue) {
     document.querySelector('.errorQuantity').remove();
   }
   return hasErrors;
-
+}
