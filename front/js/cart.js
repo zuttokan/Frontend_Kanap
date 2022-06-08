@@ -40,9 +40,9 @@ function renderImg(productDivImg, image) {
 }
 
 // implement the div
-function renderItemContent(productImg) {
+function renderItemContent(productArticle) {
   const productItemContent = document.createElement('div');
-  productImg.appendChild(productItemContent);
+  productArticle.appendChild(productItemContent);
   productItemContent.className = 'cart__item__content';
   return productItemContent;
 }
@@ -71,7 +71,7 @@ function renderColor(productTitle, color) {
   return productColor;
 }
 // implement the price
-function renderPrice(productColor, price, productItemContentTitlePrice) {
+function renderPrice(productItemContentTitlePrice, price) {
   const productPrice = document.createElement('p');
   productItemContentTitlePrice.appendChild(productPrice);
   productPrice.innerHTML = price + '€';
@@ -79,7 +79,7 @@ function renderPrice(productColor, price, productItemContentTitlePrice) {
 }
 
 // Insertion de l'élément "div"
-function renderItemContentSettings(productPrice) {
+function renderItemContentSettings(productItemContent) {
   const productItemContentSettings = document.createElement('div');
   productItemContent.appendChild(productItemContentSettings);
   productItemContentSettings.className = 'cart__item__content__settings';
@@ -104,7 +104,7 @@ function renderQty(productItemContentSettingsQuantity) {
 }
 
 // implement the quantity
-function renderproductQuantity(productQty, qty) {
+function renderproductQuantity(productItemContentSettingsQuantity, qty) {
   const productQuantity = document.createElement('input');
   productItemContentSettingsQuantity.appendChild(productQuantity);
   productQuantity.value = qty;
@@ -117,7 +117,7 @@ function renderproductQuantity(productQty, qty) {
 }
 
 // implement the div for delete product
-function renderItemContentSettingsDelete(productQuantity) {
+function renderItemContentSettingsDelete(productItemContentSettings) {
   const productItemContentSettingsDelete = document.createElement('div');
   productItemContentSettings.appendChild(productItemContentSettingsDelete);
   productItemContentSettingsDelete.className =
@@ -190,7 +190,7 @@ function render(consolidatedData) {
     const productArticle = renderArticle(consolidatedData[i].key);
     const productDivImg = renderImage(productArticle);
     const productImg = renderImg(productDivImg, consolidatedData[i].image);
-    const productItemContent = renderItemContent(productImg);
+    const productItemContent = renderItemContent(productArticle);
     const productItemContentTitlePrice =
       renderItemContentTitlePrice(productItemContent);
     const productTitle = renderTitle(
