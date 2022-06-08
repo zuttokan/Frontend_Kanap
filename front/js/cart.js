@@ -1,21 +1,21 @@
-// Récupération des produits de l'api (voir script.js)
+// Retrieve API products (see script.js)
 async function getProductsFromCatalog() {
   const product = await fetch('http://localhost:3000/api/products/');
   return product.json();
 }
 
-// Retourne le localstorage
+// we get the localStorage
 function getCartContent() {
   const data = JSON.parse(localStorage.getItem('cmdProduct'));
-  // avec "data" on récupére le localStorage qui a pour argument cmdProduct
   return data;
 }
-//filtrer un tableau pour trouver une correspondance avec l'id du produit
+//filter a table to match the product id
 function findItemFromCatalog(catalog, id) {
   return catalog.find((item) => item._id === id);
   //.find renvoie la valeur du premier élément trouvé dans le tableau
 }
 
+// implement the information for the product
 function renderArticle(key) {
   const productArticle = document.createElement('article');
   document.querySelector('#cart__items').appendChild(productArticle);
@@ -24,6 +24,7 @@ function renderArticle(key) {
   return productArticle;
 }
 
+// implement the div for the image
 function renderImage(productArticle) {
   const productDivImg = document.createElement('div');
   productArticle.appendChild(productDivImg);
@@ -31,6 +32,7 @@ function renderImage(productArticle) {
   return productDivImg;
 }
 
+// implement the image
 function renderImg(productDivImg, image) {
   const productImg = document.createElement('img');
   productDivImg.appendChild(productImg);
@@ -38,6 +40,7 @@ function renderImg(productDivImg, image) {
   return productImg;
 }
 
+// implement the div
 function renderItemContent(productImg) {
   const productItemContent = document.createElement('div');
   productImg.appendChild(productItemContent);
@@ -45,6 +48,7 @@ function renderItemContent(productImg) {
   return productItemContent;
 }
 
+// implement the div for the price
 function renderItemContentTitlePrice(productItemContent) {
   const productItemContentTitlePrice = document.createElement('div');
   productItemContent.appendChild(productItemContentTitlePrice);
@@ -52,7 +56,7 @@ function renderItemContentTitlePrice(productItemContent) {
   return productItemContentTitlePrice;
 }
 
-// Insertion du titre h2
+// implement the title
 function renderTitle(productItemContentTitlePrice, name) {
   const productTitle = document.createElement('h2');
   productItemContentTitlePrice.appendChild(productTitle);
@@ -60,14 +64,14 @@ function renderTitle(productItemContentTitlePrice, name) {
   return productTitle;
 }
 
-// Insertion de la couleur
+// implement the color
 function renderColor(productTitle, color) {
   const productColor = document.createElement('p');
   productTitle.appendChild(productColor);
   productColor.innerHTML = color;
   return productColor;
 }
-// Insertion du prix
+// implement the price
 function renderPrice(productColor, price, productItemContentTitlePrice) {
   const productPrice = document.createElement('p');
   productItemContentTitlePrice.appendChild(productPrice);
@@ -83,7 +87,7 @@ function renderItemContentSettings(productPrice) {
   return productItemContentSettings;
 }
 
-// Insertion de l'élément "div"
+// implement the div
 function renderItemContentSettingsQuantity(productItemContentSettings) {
   const productItemContentSettingsQuantity = document.createElement('div');
   productItemContentSettings.appendChild(productItemContentSettingsQuantity);
@@ -92,7 +96,7 @@ function renderItemContentSettingsQuantity(productItemContentSettings) {
   return productItemContentSettingsQuantity;
 }
 
-// Insertion de "Qty : "
+// implement the "p" for quantity
 function renderQty(productItemContentSettingsQuantity) {
   const productQty = document.createElement('p');
   productItemContentSettingsQuantity.appendChild(productQty);
@@ -100,7 +104,7 @@ function renderQty(productItemContentSettingsQuantity) {
   return productQty;
 }
 
-// Insertion de la quantité
+// implement the quantity
 function renderproductQuantity(productQty, qty) {
   const productQuantity = document.createElement('input');
   productItemContentSettingsQuantity.appendChild(productQuantity);
@@ -113,7 +117,7 @@ function renderproductQuantity(productQty, qty) {
   return productQuantity;
 }
 
-// Insertion de l'élément "div"
+// implement the div for delete product
 function renderItemContentSettingsDelete(productQuantity) {
   const productItemContentSettingsDelete = document.createElement('div');
   productItemContentSettings.appendChild(productItemContentSettingsDelete);
@@ -121,7 +125,7 @@ function renderItemContentSettingsDelete(productQuantity) {
     'cart__item__content__settings__delete';
 }
 
-// Insertion de "p" supprimer
+// implement the delete product
 function renderDelete(productItemContentSettingsDelete, key) {
   const productDelete = document.createElement('p');
   productItemContentSettingsDelete.appendChild(productDelete);
@@ -145,7 +149,7 @@ function renderDelete(productItemContentSettingsDelete, key) {
   });
 }
 
-//Modification de la quantité des articles
+// implement the modify product
 function renderModify(productDelete) {
   const productModify = document.querySelectorAll('.itemQuantity');
   for (let i = 0; i < productModify.length; i++) {
@@ -161,6 +165,27 @@ function renderModify(productDelete) {
     });
   }
 }
+
+/**
+ * @name render
+ * @description uptade the DOM
+ * @param productArticle implement the information for the product
+ * @param productDivImg implement the div for the image
+ * @param productImg implement the image
+ * @param productItemContent implement the div
+ * @param productItemContentTitlePrice
+ * @param productTitle implement the title
+ * @param productColor implement the color
+ * @param productPrice implement the price
+ * @param productItemContentSettings implement the div
+ * @param productItemContentSettingsQuantity implement the div
+ * @param productQty implement the Qty
+ * @param productQuantity implement the quantity
+ * @param productItemContentSettingsDelete implement the div
+ * @param productDelete implement the delete product
+ * @param productModify implement the modify product
+ * @return void
+ */
 
 // implémentation dans le DOM
 function render(consolidatedData) {
@@ -195,16 +220,18 @@ function render(consolidatedData) {
   }
 }
 
+// Updated the DOM
 async function processCart() {
+  // catalogProducts retrieve all products from the back-end
   const catalogProducts = await getProductsFromCatalog();
-  // catalogProducts récupére les produits dans le back-end
+  // cartContent retrieve all products from the localStorage
   const cartContent = getCartContent();
-  // cartContent récupére les produits dans le localStorage
+  // Return a new array
   const consolidatedCart = cartContent.map((cartItem) => {
-    // On boucle sur cartContent pour retourner un tableau d'objet
+    // retrieve a defined product
     const product = findItemFromCatalog(catalogProducts, cartItem.id);
-    // product récupére un produit précisement...
 
+    // retrieve the information of a product
     return {
       id: cartItem.id,
       qty: cartItem.quantity,
@@ -216,88 +243,78 @@ async function processCart() {
       description: product.description,
       price: product.price,
       totalAmount: product.price * cartItem.quantity,
-    }; // on retourne les charactérisiques d'un produit
+    };
   });
   console.log(consolidatedCart);
 
+  // call render for updated the DOM
   render(consolidatedCart);
-  // on appel render afin de modifier le DOM
 }
 
+// call processCart for updated the DOM
 processCart();
 
+// total price of all items
 function getTotalPrice(consolidatedData) {
   return consolidatedData.reduce((total, c) => total + c.totalAmount, 0);
-  //on applique une fonction (reduce) qui est un « accumulateur » et qui traite chaque valeur d'une liste afin de la réduire à une seule valeur.
 }
 
+//total quantity of all items
 function getTotalQty(consolidatedData) {
-  // second donne la parametre la base numérique
   return consolidatedData.reduce((total, c) => total + parseInt(c.qty, 10), 0);
-  //on applique la meme fonction (reduce) en ajoutant une autre fonction (parseInt) qui analyse une chaîne de caractère renvoie nombre un entier
 }
 
-//mise en place du formulaire avec regex
+// implement the form
 function validateForm() {
-  let form = document.querySelector('.cart__order__form');
-
-  // Création de RegExp pour le formulaire
-  let formRegExp = new RegExp("^[a-zA-Z ,.'-]+$");
-  let addressRegExp = new RegExp(
+  const form = document.querySelector('.cart__order__form');
+  const formRegExp = new RegExp("^[a-zA-Z ,.'-]+$");
+  const addressRegExp = new RegExp(
     '^[0-9]{1,3}(?:(?:[,. ]){1}[-a-zA-Zàâäéèêëïîôöùûüç]+)+'
   );
-  let emailRegExp = new RegExp(
+  const emailRegExp = new RegExp(
     '^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$'
   );
-  // RegExp permet de vérifier le contenu d'une chaîne de caractères.
 
-  // validation du formulaire ou validateField
+  // validation of the form or validateField
   const validation = [
     validTextField(form.firstName, formRegExp),
     validTextField(form.lastName, formRegExp),
     validTextField(form.city, formRegExp),
     validTextField(form.address, addressRegExp),
     validTextField(form.email, emailRegExp),
-    // on associe les regexp avec le formulaire pour vérification
   ];
-
   return validation.filter((r) => r == false).length == 0;
 }
 
-// fonction de validation du formulaire
+// implement the conditions of the form
 function validTextField(input, regExp) {
-  let errorMsg = input.nextElementSibling;
+  const errorMsg = input.nextElementSibling;
 
   if (regExp.test(input.value)) {
     errorMsg.innerHTML = '';
-    // si le texte est valide on n'inscrit rien
     return true;
   } else {
     errorMsg.innerHTML = 'Veuillez renseigner ce champ.';
     return false;
-    // si le texte n'est pas valide on un message d'erreur s'affiche sur la page
   }
 }
 
-//
+// Retrieve items from localstorage
 function postForm() {
   const order = document.getElementById('order');
 
-  // récupération des articles
+  // a ternary condition is used to check if the localstorage contains elements, if yes they are recovered
   const productCmd = localStorage.hasOwnProperty('cmdProduct')
-    ? // hasOwnProperty retourne un booléen indiquant si l'objet possède la propriété spécifiée
-      JSON.parse(localStorage.getItem('cmdProduct'))
+    ? JSON.parse(localStorage.getItem('cmdProduct'))
     : [];
-  // on utilise une condition ternaire pour vérifier si le localstorage contient des éléments, si oui on les récupére
   console.log(productCmd);
 
   if (productCmd.length == 0) {
     console.error('Empty cart');
     return;
-    // si il n'y a rien cela retourne une erreur
   }
 
-  //récupèration des données du formulaire dans un objet
+  // Retrieve of form data in an object
   const contact = {
     firstName: document.getElementById('firstName').value,
     lastName: document.getElementById('lastName').value,
@@ -306,7 +323,7 @@ function postForm() {
     email: document.getElementById('email').value,
   };
 
-  //  récupération de tous les éléments du formulaire et des produits achetés
+  // Retrieve formular and products purchased
   const sendFormData = {
     contact,
     products: productCmd.map((product) => product.id),
@@ -314,7 +331,7 @@ function postForm() {
 
   console.log(sendFormData);
 
-  //envoie du formulaire au serveur
+  // Send the formular to the server
   const options = {
     method: 'POST',
     body: JSON.stringify(sendFormData),
@@ -330,7 +347,7 @@ function postForm() {
     });
 }
 
-// vérifie si le form est valide, si il est valide le traitement s'arrete
+// Check if the form is valid
 order.addEventListener('click', (e) => {
   e.preventDefault();
 
