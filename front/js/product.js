@@ -44,10 +44,10 @@ async function injectProduct() {
   productDescription.innerHTML = product.description;
 
   //Implémentation des couleurs
-  let colors = document.querySelector('colors');
+  const colors = document.querySelector('colors');
   for (let colors of product.colors) {
     //création d'une boucle afin de parcourir les couleurs du produit
-    let productColors = document.createElement('option');
+    const productColors = document.createElement('option');
     document.querySelector('#colors').appendChild(productColors);
     productColors.value = colors;
     productColors.innerHTML = colors;
@@ -55,24 +55,28 @@ async function injectProduct() {
 }
 
 const STORAGE_KEY = 'cmdProduct';
-// déclaration de la constente STORAGE_KEY qui attribu à cmdProduct les produits commander dans l'api
+// Déclaration de la constante STORAGE_KEY qui sera la clé du localStorage utilisé pour stocké les produits du panier
 const idProduct = getProductId();
 // déclaration de la constente idProduct qui récupére l'id produit
 const addToCardBtn = document.querySelector('#addToCart');
-// déclaration de la constente addToCardBtn dans le DOM
+// récupération de la référence de l'element addToCard dans le DOM
 const colorProduct = document.querySelector('#colors');
-//déclaration de la constente colorProduct dans le DOM
+//récupération de la référence de l'element addToCard dans le DOM
 const quantityProduct = document.querySelector('#quantity');
-//déclaration de la constente quantityProduct dans le DOM
+//récupération de la référence de l'element quantity dans le DOM
 
-// Récupération du localStorage
+/**
+ * @name updateLocalStorage
+ * @description uptade (modification) du localStorage
+ * @param product représentation du produit ajouté au localStorage
+ * @return void
+ */
+
 function updateLocalStorage(product) {
   const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
   // data récupére le localSotrage et Json.parse transforme la chaine de charatere en objet pour Javascript
   const foundIndex = data.findIndex((d) => d.key === product.key);
   //  la méthode findIndex() va parcourir "data" qui est un tableau
-  // "d.key === product.key" c'est une condition cela veut dire data  === localStorage
-  // product === nouveau produit
   // si dans le localStorage on a un produit avec le même name que le nouveau produit
   // alors on récupère la position dans le tableau
   // sinon foundIndex sera === -1 cela veut dire qu il n y a pas de produit avec ce id
@@ -105,7 +109,6 @@ addToCardBtn.addEventListener('click', () => {
 
   if (checkErrors(colorValue, quantityValue) == true) {
     return;
-    // on verifie que les valeurs couleur et quantité soient remplis.
     // on retourne les informations si c'est true, sinon on rendre dans la function checkErrors.
   }
 
