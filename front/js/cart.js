@@ -126,7 +126,7 @@ function renderItemContentSettingsDelete(productItemContentSettings) {
 }
 
 // implement the delete product
-function renderDelete(productItemContentSettingsDelete, key) {
+function renderDelete(productItemContentSettingsDelete, key, deleteKey) {
   const productDelete = document.createElement('p');
   productItemContentSettingsDelete.appendChild(productDelete);
   productDelete.className = 'deleteItem';
@@ -145,7 +145,7 @@ function renderDelete(productItemContentSettingsDelete, key) {
 }
 
 // implement the modify product
-function renderModify(productDelete) {
+function renderModify(productQuantity, qty) {
   const productModify = document.querySelectorAll('.itemQuantity');
   for (let i = 0; i < productModify.length; i++) {
     productModify[i].addEventListener('change', (e) => {
@@ -207,10 +207,17 @@ function render(consolidatedData) {
       productQty,
       consolidatedData[i].qty
     );
-    const productItemContentSettingsDelete =
-      renderItemContentSettingsDelete(productQuantity);
-    const productDelete = renderDelete(productItemContentSettingsDelete);
-    const productModify = renderModify(productDelete);
+    const productItemContentSettingsDelete = renderItemContentSettingsDelete(
+      productItemContentSettings
+    );
+    const productDelete = renderDelete(
+      productItemContentSettings,
+      productArticle.id
+    );
+    const productModify = renderModify(
+      productQuantity,
+      consolidatedData[i].qty
+    );
 
     document.getElementById('totalQuantity').innerHTML =
       getTotalQty(consolidatedData);
