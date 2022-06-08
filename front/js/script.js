@@ -16,23 +16,23 @@ async function injectProducts() {
     productLink.href = `product.html?id=${product._id}`;
     document.querySelector('.items').appendChild(productLink);
 
-    //  implementation  article
+    //  implement  article
     const productArticle = document.createElement('article');
     // déclaration que productArticle est l'enfant de productLink, ce qui lui permet de regarder ce qu'il se passe à l'interrieur
     productLink.appendChild(productArticle);
 
-    //  implementation image
+    //  implement image
     const productImg = document.createElement('img');
     productArticle.appendChild(productImg);
     productImg.src = product.imageUrl;
     productImg.alt = product.altTxt;
 
-    //  implementation title "h3"
+    //  implement title "h3"
     const productName = document.createElement('h3');
     productArticle.appendChild(productName);
     productName.innerHTML = product.name;
 
-    //  implementation  text "p"
+    //  implement  text "p"
     const productDescription = document.createElement('p');
     productArticle.appendChild(productDescription);
     productDescription.innerHTML = product.description;

@@ -12,7 +12,6 @@ function getCartContent() {
 //filter a table to match the product id
 function findItemFromCatalog(catalog, id) {
   return catalog.find((item) => item._id === id);
-  //.find renvoie la valeur du premier élément trouvé dans le tableau
 }
 
 // implement the information for the product

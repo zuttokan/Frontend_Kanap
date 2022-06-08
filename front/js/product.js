@@ -75,7 +75,7 @@ function updateLocalStorage(product) {
   }
 }
 
-// on ecoute le clique utilisateur
+// listening the click for the addToCardBtn
 addToCardBtn.addEventListener('click', () => {
   const arrayProduct = []; 
   const colorValue = colorProduct.value; 
@@ -94,13 +94,15 @@ addToCardBtn.addEventListener('click', () => {
     return;
   }
 
+// if yes we will update the localStorage with the function updateLocalStorage() which will take the object and not the array
   if (localStorage.hasOwnProperty(STORAGE_KEY)) {
     updateLocalStorage(objectProduct);
-    // si oui on va update le localStorage avec la fonction updateLocalStorage() qui va prendre en paramétre l objet et non le tableau
+    
   } else {
+    // if there is no localStorage with the name === "cmdProduct" on set a localStorage with the table stringifying it
     arrayProduct.push(objectProduct);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(arrayProduct));
-    // si il n y a pas de localStorage avec le nom === "cmdProduct" on set un localStorage avec le tableau en le stringifiant
+    
   }
 });
 
