@@ -132,20 +132,16 @@ function renderDelete(productItemContentSettingsDelete, key) {
   productDelete.className = 'deleteItem';
   productDelete.innerHTML = 'Supprimer';
   productDelete.addEventListener('click', (e) => {
-    // addEventListener à chaque click on appel un evement
     e.preventDefault();
-    // preventDefault() sert à stopper le comportement du bouton
 
-    // filtrer l'élément cliqué par le bouton supprimer
     const deleteKey = key;
-    // deleteKey récupére la clé du produit et permet sa suppréssion
+    // set the localStorage and return a new array
     localStorage.setItem(
       'cmdProduct',
       JSON.stringify(getCartContent().filter((el) => el.key !== deleteKey))
     );
-    // on mets à jour le localStorage en retournant un nouveau tableau
+
     processCart();
-    //on appel processCart qui réactualise la page
   });
 }
 
@@ -155,13 +151,14 @@ function renderModify(productDelete) {
   for (let i = 0; i < productModify.length; i++) {
     productModify[i].addEventListener('change', (e) => {
       e.preventDefault();
+
+      //  retrieve items of localStorage
       const productModifyAfter = getCartContent();
-      // productModifyAfter reprend les éléments du localStorage
+
+      // send modify quantity
       productModifyAfter[i].quantity = e.target.value;
-      // on envoi la quantité modifié
       localStorage.setItem('cmdProduct', JSON.stringify(productModifyAfter));
       processCart();
-      // on mets à jour le localStorage en retournant un nouveau tableau
     });
   }
 }
@@ -187,7 +184,7 @@ function renderModify(productDelete) {
  * @return void
  */
 
-// implémentation dans le DOM
+// implement the DOM
 function render(consolidatedData) {
   document.querySelector('#cart__items').innerHTML = '';
   for (let i = 0; i < consolidatedData.length; i++) {
