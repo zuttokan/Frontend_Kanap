@@ -67,14 +67,16 @@ function renderTitle(productItemContentTitlePrice, name) {
 function renderColor(productTitle, color) {
   const productColor = document.createElement('p');
   productTitle.appendChild(productColor);
-  productColor.innerHTML = color;
+  productColor.innerHTML = `<div style = padding-top:10px> ${color} </div>`;
   return productColor;
 }
 // implement the price
 function renderPrice(productItemContentTitlePrice, price) {
   const productPrice = document.createElement('p');
   productItemContentTitlePrice.appendChild(productPrice);
-  productPrice.innerHTML = price + '€';
+  productPrice.innerHTML = `<div style = padding-top:50px> ${
+    price + '€'
+  } </div>`;
   return productPrice;
 }
 
@@ -148,7 +150,7 @@ function renderDelete(productItemContentSettingsDelete, key) {
   const productDelete = document.createElement('p');
   productItemContentSettingsDelete.appendChild(productDelete);
   productDelete.className = 'deleteItem';
-  productDelete.innerHTML = 'Supprimer';
+  productDelete.innerHTML = `<div style = padding-top:10px> Supprimer</div>`;
   productDelete.addEventListener('click', (e) => {
     e.preventDefault();
 
