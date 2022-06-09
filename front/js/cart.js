@@ -116,6 +116,24 @@ function renderproductQuantity(productItemContentSettingsQuantity, qty) {
   return productQuantity;
 }
 
+// implement the modify product
+function renderModify(productQuantity, qty) {
+  const productModify = document.querySelectorAll('.itemQuantity');
+  for (let i = 0; i < productModify.length; i++) {
+    productModify[i].addEventListener('change', (e) => {
+      e.preventDefault();
+
+      //  retrieve items of localStorage
+      let productModifyAfter = getCartContent();
+
+      // send modify quantity
+      productModifyAfter[i].quantity = e.target.value;
+      localStorage.setItem('cmdProduct', JSON.stringify(productModifyAfter));
+      processCart();
+    });
+  }
+}
+
 // implement the div for delete product
 function renderItemContentSettingsDelete(productItemContentSettings) {
   const productItemContentSettingsDelete = document.createElement('div');
@@ -126,7 +144,7 @@ function renderItemContentSettingsDelete(productItemContentSettings) {
 }
 
 // implement the delete product
-function renderDelete(productItemContentSettingsDelete, key, deleteKey) {
+function renderDelete(productItemContentSettingsDelete, key) {
   const productDelete = document.createElement('p');
   productItemContentSettingsDelete.appendChild(productDelete);
   productDelete.className = 'deleteItem';
@@ -144,24 +162,6 @@ function renderDelete(productItemContentSettingsDelete, key, deleteKey) {
   });
 }
 
-// implement the modify product
-function renderModify(productQuantity, qty) {
-  const productModify = document.querySelectorAll('.itemQuantity');
-  for (let i = 0; i < productModify.length; i++) {
-    productModify[i].addEventListener('change', (e) => {
-      e.preventDefault();
-
-      //  retrieve items of localStorage
-      const productModifyAfter = getCartContent();
-
-      // send modify quantity
-      productModifyAfter[i].quantity = e.target.value;
-      localStorage.setItem('cmdProduct', JSON.stringify(productModifyAfter));
-      processCart();
-    });
-  }
-}
-
 /**
  * @name render
  * @description uptade the DOM
@@ -177,9 +177,9 @@ function renderModify(productQuantity, qty) {
  * @param productItemContentSettingsQuantity implement the div
  * @param productQty implement the Qty
  * @param productQuantity implement the quantity
+ * @param productModify implement the modify product
  * @param productItemContentSettingsDelete implement the div
  * @param productDelete implement the delete product
- * @param productModify implement the modify product
  * @return void
  */
 
@@ -190,7 +190,7 @@ function render(consolidatedData) {
     const productArticle = renderArticle(consolidatedData[i].key);
     const productDivImg = renderImage(productArticle);
     const productImg = renderImg(productDivImg, consolidatedData[i].image);
-    const productItemContent = renderItemContent(productArticle);
+    const productItemContent = renderItemContent(productArticle, productImg);
     const productItemContentTitlePrice =
       renderItemContentTitlePrice(productItemContent);
     const productTitle = renderTitle(
@@ -207,16 +207,16 @@ function render(consolidatedData) {
       productQty,
       consolidatedData[i].qty
     );
+    const productModify = renderModify(
+      productQuantity,
+      consolidatedData[i].qty
+    );
     const productItemContentSettingsDelete = renderItemContentSettingsDelete(
       productItemContentSettings
     );
     const productDelete = renderDelete(
-      productItemContentSettings,
+      productItemContentSettingsDelete,
       productArticle.id
-    );
-    const productModify = renderModify(
-      productQuantity,
-      consolidatedData[i].qty
     );
 
     document.getElementById('totalQuantity').innerHTML =
