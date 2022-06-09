@@ -74,7 +74,7 @@ function renderColor(productTitle, color) {
 function renderPrice(productItemContentTitlePrice, price) {
   const productPrice = document.createElement('p');
   productItemContentTitlePrice.appendChild(productPrice);
-  productPrice.innerHTML = `<div style = padding-top:50px> ${
+  productPrice.innerHTML = `<div style = padding-bottom:50px> ${
     price + '€'
   } </div>`;
   return productPrice;
@@ -118,15 +118,16 @@ function renderproductQuantity(productItemContentSettingsQuantity, qty) {
   return productQuantity;
 }
 
-// implement the modify product
-function renderModify(productQuantity, qty) {
+// implement the modification of numbers product
+function renderModify(productQuantity) {
   const productModify = document.querySelectorAll('.itemQuantity');
+
   for (let i = 0; i < productModify.length; i++) {
     productModify[i].addEventListener('change', (e) => {
       e.preventDefault();
 
       //  retrieve items of localStorage
-      let productModifyAfter = getCartContent();
+      const productModifyAfter = getCartContent();
 
       // send modify quantity
       productModifyAfter[i].quantity = e.target.value;
@@ -154,7 +155,7 @@ function renderDelete(productItemContentSettingsDelete, key) {
   productDelete.addEventListener('click', (e) => {
     e.preventDefault();
 
-    const deleteKey = key;
+    let deleteKey = key;
     // set the localStorage and return a new array
     localStorage.setItem(
       'cmdProduct',
