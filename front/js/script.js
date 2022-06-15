@@ -18,7 +18,6 @@ async function injectProducts() {
 
     //  implement  article
     const productArticle = document.createElement('article');
-    // déclaration que productArticle est l'enfant de productLink, ce qui lui permet de regarder ce qu'il se passe à l'interrieur
     productLink.appendChild(productArticle);
 
     //  implement image
@@ -36,7 +35,5 @@ async function injectProducts() {
     const productDescription = document.createElement('p');
     productArticle.appendChild(productDescription);
     productDescription.innerHTML = product.description;
-
-    console.log(product);
   });
 }

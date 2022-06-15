@@ -239,7 +239,6 @@ async function processCart() {
       totalAmount: product.price * cartItem.quantity,
     };
   });
-  console.log(consolidatedCart);
 
   // call render for updated the DOM
   return consolidatedCart;
@@ -302,10 +301,8 @@ function postForm() {
   const productCmd = localStorage.hasOwnProperty('cmdProduct')
     ? JSON.parse(localStorage.getItem('cmdProduct'))
     : [];
-  console.log(productCmd);
 
   if (productCmd.length == 0) {
-    console.error('Empty cart');
     return;
   }
 
@@ -323,8 +320,6 @@ function postForm() {
     contact,
     products: productCmd.map((product) => product.id),
   };
-
-  console.log(sendFormData);
 
   // Send the formular to the server
   const options = {
