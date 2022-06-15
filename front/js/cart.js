@@ -9,7 +9,7 @@ function getCartContent() {
   const data = JSON.parse(localStorage.getItem('cmdProduct'));
   return data;
 }
-//filter a table to match the product id
+// filter a table to match the product id
 function findItemFromCatalog(catalog, id) {
   return catalog.find((item) => item._id === id);
 }
@@ -74,9 +74,7 @@ function renderColor(productTitle, color) {
 function renderPrice(productItemContentTitlePrice, price) {
   const productPrice = document.createElement('p');
   productItemContentTitlePrice.appendChild(productPrice);
-  productPrice.innerHTML = `<div style = padding-bottom:50px> ${
-    price + '€'
-  } </div>`;
+  productPrice.innerHTML = `<div style = padding-bottom:50px> ${`${price}€`} </div>`;
   return productPrice;
 }
 
@@ -123,7 +121,7 @@ function renderModify(productQuantity) {
   const productModify = document.querySelectorAll('.itemQuantity');
 
   for (let i = 0; i < productModify.length; i++) {
-    productModify[i].addEventListener('change', (e) => {
+    productModify[i].addEventListener('change', async (e) => {
       e.preventDefault();
 
       //  retrieve items of localStorage
@@ -132,7 +130,7 @@ function renderModify(productQuantity) {
       // send modify quantity
       productModifyAfter[i].quantity = e.target.value;
       localStorage.setItem('cmdProduct', JSON.stringify(productModifyAfter));
-      processCart();
+      renderTotalProduct(await processCart());
     });
   }
 }
@@ -151,38 +149,24 @@ function renderDelete(productItemContentSettingsDelete, key) {
   const productDelete = document.createElement('p');
   productItemContentSettingsDelete.appendChild(productDelete);
   productDelete.className = 'deleteItem';
-  productDelete.innerHTML = `<div style = padding-top:10px> Supprimer</div>`;
-  productDelete.addEventListener('click', (e) => {
+  productDelete.innerHTML = '<div style = padding-top:10px> Supprimer</div>';
+  productDelete.addEventListener('click', async (e) => {
     e.preventDefault();
 
-    let deleteKey = key;
+    const deleteKey = key;
     // set the localStorage and return a new array
     localStorage.setItem(
       'cmdProduct',
       JSON.stringify(getCartContent().filter((el) => el.key !== deleteKey))
     );
-    processCart();
+    render(await processCart());
   });
 }
 
 /**
  * @name render
  * @description uptade the DOM
- * @param productArticle implement the information for the product
- * @param productDivImg implement the div for the image
- * @param productImg implement the image
- * @param productItemContent implement the div
- * @param productItemContentTitlePrice
- * @param productTitle implement the title
- * @param productColor implement the color
- * @param productPrice implement the price
- * @param productItemContentSettings implement the div
- * @param productItemContentSettingsQuantity implement the div
- * @param productQty implement the Qty
- * @param productQuantity implement the quantity
- * @param productModify implement the modify product
- * @param productItemContentSettingsDelete implement the div
- * @param productDelete implement the delete product
+ * @param consolidatedData
  * @return void
  */
 
@@ -217,16 +201,17 @@ function render(consolidatedData) {
     const productItemContentSettingsDelete = renderItemContentSettingsDelete(
       productItemContentSettings
     );
-    const productDelete = renderDelete(
-      productItemContentSettingsDelete,
-      productArticle.id
-    );
-
-    document.getElementById('totalQuantity').innerHTML =
-      getTotalQty(consolidatedData);
-    document.getElementById('totalPrice').innerHTML =
-      getTotalPrice(consolidatedData);
+    renderDelete(productItemContentSettingsDelete, productArticle.id);
   }
+  renderTotalProduct(consolidatedData);
+}
+
+// Refresh Total price and quantity
+function renderTotalProduct(consolidatedData) {
+  document.getElementById('totalQuantity').innerHTML =
+    getTotalQty(consolidatedData);
+  document.getElementById('totalPrice').innerHTML =
+    getTotalPrice(consolidatedData);
 }
 
 // Updated the DOM
@@ -257,18 +242,20 @@ async function processCart() {
   console.log(consolidatedCart);
 
   // call render for updated the DOM
-  render(consolidatedCart);
+  return consolidatedCart;
 }
 
 // call processCart for updated the DOM
-processCart();
+async function main() {
+  render(await processCart());
+}
 
 // total price of all items
 function getTotalPrice(consolidatedData) {
   return consolidatedData.reduce((total, c) => total + c.totalAmount, 0);
 }
 
-//total quantity of all items
+// total quantity of all items
 function getTotalQty(consolidatedData) {
   return consolidatedData.reduce((total, c) => total + parseInt(c.qty, 10), 0);
 }
@@ -302,10 +289,9 @@ function validTextField(input, regExp) {
   if (regExp.test(input.value)) {
     errorMsg.innerHTML = '';
     return true;
-  } else {
-    errorMsg.innerHTML = 'Veuillez renseigner ce champ.';
-    return false;
   }
+  errorMsg.innerHTML = 'Veuillez renseigner ce champ.';
+  return false;
 }
 
 // Retrieve items from localstorage
@@ -352,7 +338,7 @@ function postForm() {
     .then((response) => response.json())
     .then((data) => {
       localStorage.setItem('orderId', data.orderId);
-      document.location.href = 'confirmation.html?id=' + data.orderId;
+      document.location.href = `confirmation.html?id=${data.orderId}`;
     });
 }
 
@@ -367,3 +353,6 @@ order.addEventListener('click', (e) => {
 
   postForm();
 });
+
+// entry point
+main();
