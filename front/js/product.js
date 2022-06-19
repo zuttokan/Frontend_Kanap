@@ -15,8 +15,10 @@ async function getProduct(productId) {
   return product.json();
 }
 
+// call the function
 injectProduct();
 
+// Display the product chooses from the API to the page
 async function injectProduct() {
   const productId = getProductId();
   const product = await getProduct(productId);
