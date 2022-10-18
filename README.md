@@ -1,6 +1,6 @@
 # <a  href="https://openclassrooms.com/fr/paths/717-developpeur-web"  title="openclassrooms"><img  src="https://upload.wikimedia.org/wikipedia/fr/0/0d/Logo_OpenClassrooms.png"  alt="openclassrooms"  width="35px"  height="31px"></a> Projet 5 - Openclassrooms - DEVELOPPEUR WEB
 
-# Construisez un site e-commerce en JavaScript
+# Construire un site e-commerce en JavaScript
 ## Le projet contient les technologies suivantes:
 
 - <a  href="https://nodejs.org/"  title="Node.js"><img  src="https://github.com/get-icon/geticon/raw/master/icons/nodejs-icon.svg"  alt="Node.js"  width="25px"  height="21px"> Node.js</a>
