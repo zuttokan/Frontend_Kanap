@@ -1,11 +1,11 @@
-# Kanap - Construisez un site e-commerce en JavaScript
+# <a  href="https://openclassrooms.com/fr/paths/717-developpeur-web"  title="openclassrooms"><img  src="https://upload.wikimedia.org/wikipedia/fr/0/0d/Logo_OpenClassrooms.png"  alt="openclassrooms"  width="25px"  height="21px"></a> Projet 5 - Openclassrooms - DEVELOPPEUR WEB
 
-# Projet 5 - Openclassrooms - DEVELOPPEUR WEB
+# Construisez un site e-commerce en JavaScript
 
 ## Le projet contient les technologies suivantes:
 
 - <a  href="https://nodejs.org/"  title="Node.js"><img  src="https://github.com/get-icon/geticon/raw/master/icons/nodejs-icon.svg"  alt="Node.js"  width="25px"  height="21px"> Node.js</a>
-- <a  href="https://www.w3schools.com/js/"  title="JAVASCRIPT"><img  src="https://github.com/get-icon/geticon/blob/master/icons/javascript.svg"  alt="JAVASCRIPT"  width="25px"  height="21px"> CSS</a>
+- <a  href="https://www.w3schools.com/js/"  title="JAVASCRIPT"><img  src="https://github.com/get-icon/geticon/blob/master/icons/javascript.svg"  alt="JAVASCRIPT"  width="25px"  height="21px"> JAVASCRIPT</a>
 
 ### Pour Visionner la video du projet:
 
@@ -44,7 +44,7 @@ node server (Lance le serveur)
 ### Fonctionnalités techniques:
 
 <ul>
-<li>Unifier l’API en intégrant dynamiquement les éléments de  dans les différentes pages web avec JavaScript. Le code du front-end et de l’API </li>
+<li>Unifier l’API en intégrant dynamiquement les éléments dans les différentes pages web avec JavaScript. Le code du front-end et de l’API </li>
 </ul>
 
 ## Screen version Desktop
