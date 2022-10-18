@@ -1,15 +1,54 @@
-# Kanap #
+# Kanap - Construisez un site e-commerce en JavaScript
 
-This is the front end and back end server for Project 5 of the Web Developer path.
+# Projet 5 - Openclassrooms - DEVELOPPEUR WEB
 
-### Back end Prerequisites ###
+## Le projet contient les technologies suivantes:
 
-You will need to have Node and `npm` installed locally on your machine.
+- <a  href="https://nodejs.org/"  title="Node.js"><img  src="https://github.com/get-icon/geticon/raw/master/icons/nodejs-icon.svg"  alt="Node.js"  width="25px"  height="21px"> Node.js</a>
+- <a  href="https://www.w3schools.com/js/"  title="JAVASCRIPT"><img  src="https://github.com/get-icon/geticon/blob/master/icons/javascript.svg"  alt="JAVASCRIPT"  width="25px"  height="21px"> CSS</a>
 
-### Back end Installation ###
+### Pour Visionner la video du projet:
 
-Clone this repo. From the "back" folder of the project, run `npm install`. You 
-can then run the server with `node server`. 
-The server should run on `localhost` with default port `3000`. If the
-server runs on another port for any reason, this is printed to the
-console when the server starts, e.g. `Listening on port 3001`.
+## Backend
+
+### Cloner le repository:
+
+- Faites un git clone ou téléchargez la version Zip
+
+```
+Git clone https://github.com/zuttokan/Kanap
+```
+
+### Compétences évaluées
+
+- Gérer des événements JavaScript
+- Valider des données issues de sources externes
+- Créer un plan de test pour une application
+- Interagir avec un web service avec JavaScript
+
+### Lancer le serveur:
+
+- Depuis votre terminal ouvrez une ligne de commande :
+
+```
+cd backend (Dirige dans le bon dossier)
+npm install (Permet d'installer toutes les dépendences)
+node server (Lance le serveur)
+
+```
+
+### Pour accéder à l'interface du site:
+
+- Ouvrir le navigateur a l'adresse http://http://localhost:5501/front/html/index.html
+
+### Fonctionnalités techniques:
+
+<ul>
+<li>Unifier l’API en intégrant dynamiquement les éléments de  dans les différentes pages web avec JavaScript. Le code du front-end et de l’API </li>
+</ul>
+
+## Screen version Desktop
+
+![screencapture-localhost-5501-front-html-index-html-2022-10-18-09_59_17](https://user-images.githubusercontent.com/100352779/196386902-20848eee-078e-48e5-88ae-5b03f9985726.png)
+
+![screencapture-localhost-5501-front-html-cart-html-2022-10-18-10_00_38](https://user-images.githubusercontent.com/100352779/196386970-bf26d820-f059-4cc0-9d19-d1259f9a8d62.png)
